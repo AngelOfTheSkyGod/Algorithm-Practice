@@ -4,38 +4,37 @@
 using namespace std;
 
 void printBranch(vector<int> branch){
+    cout<<"current branch: "<<endl;
     for (int i = 0; i < branch.size(); i++){
         cout<<branch[i]<<endl;
     }
 
     cout<<endl;
 }
-vector<int> bactrackingBranches(vector<int> arr, vector<int> branch){
+vector<vector<int>> backtrackingBranches(vector<int> arr, vector<int> branch, vector<vector<int>> branches){
     if (arr.empty()){
-        return branch;
+        branches.push_back(branch);
+        printBranch(branch);
+        return branches;
     }
-    vector<vector<int>> branches;
     for (int i = 0; i < arr.size(); i++){
         int pop = arr[i];
         arr.erase(arr.begin() + i);
-
         branch.push_back(pop);
-        cout<<"branch: "<<pop<<endl;
+        cout<<"building: "<<endl;
         printBranch(branch);
-        branch = bactrackingBranches(arr, branch);
-        branches.push_back(branch);
-        branch.pop_back();
+        branches = backtrackingBranches(arr, branch, branches);
         arr.push_back(pop);
-        // cout<<"array now: "<<endl;
-        // printBranch(arr);
-        // return branch;
+        branch.pop_back();
     }
-    return branch;
+
+    return branches;
 }
 int main()
 {
     vector<int> arr = {1, 2, 3};
     vector<int> empty;
-    bactrackingBranches(arr, empty);
+    vector<vector<int>> branches;
+    branches = backtrackingBranches(arr, empty, branches);
     return 0;
 }
