@@ -14,15 +14,12 @@ void printBranch(vector<int> branch){
 vector<vector<int>> backtrackingBranches(vector<int> arr, vector<int> branch, vector<vector<int>> branches){
     if (arr.empty()){
         branches.push_back(branch);
-        printBranch(branch);
         return branches;
     }
     for (int i = 0; i < arr.size(); i++){
-        int pop = arr[i];
-        arr.erase(arr.begin() + i);
+        int pop = arr[0];
+        arr.erase(arr.begin());
         branch.push_back(pop);
-        cout<<"building: "<<endl;
-        printBranch(branch);
         branches = backtrackingBranches(arr, branch, branches);
         arr.push_back(pop);
         branch.pop_back();
